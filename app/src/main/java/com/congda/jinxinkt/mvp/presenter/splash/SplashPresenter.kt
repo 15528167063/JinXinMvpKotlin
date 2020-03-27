@@ -2,12 +2,16 @@ package com.congda.jinxinkt.mvp.presenter.splash
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import com.congda.baselibrary.imutils.IMPreferenceUtil
 import com.congda.jinxinkt.app.utils.RxUtils
+import com.congda.jinxinkt.application.Constanst
 import com.congda.jinxinkt.mvp.contract.splash.SplashContract
 import com.congda.jinxinkt.mvp.model.entity.IMHttpResult
 import com.congda.jinxinkt.mvp.model.entity.SplashAdBean
 import com.congda.jinxinkt.mvp.model.entity.VersonBeanData
+import com.congda.jinxinkt.mvp.ui.activity.splash.GuideActivity
 import com.jess.arms.di.scope.ActivityScope
 import com.jess.arms.http.imageloader.ImageLoader
 import com.jess.arms.integration.AppManager
@@ -52,7 +56,7 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
             });
     }
 
-     fun getSplashData() {
+    fun getSplashData() {
         mModel.getGetAdJson()
             .compose(RxUtils.applySchedulers(mRootView))
             .subscribe( object : ErrorHandleSubscriber<IMHttpResult<List<SplashAdBean>>>(mErrorHandler) {

@@ -14,7 +14,6 @@ import com.congda.jinxinkt.mvp.ui.activity.MainActivity
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.mvp.IPresenter
 import kotlinx.android.synthetic.main.activity_guide.*
-import kotlinx.android.synthetic.main.guid_view3.*
 
 class GuideActivity : IMBaseActivity<IPresenter>(), ViewPager.OnPageChangeListener, View.OnClickListener {
     private var views: ArrayList<View> = arrayListOf()

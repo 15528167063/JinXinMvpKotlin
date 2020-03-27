@@ -2,24 +2,19 @@ package com.congda.jinxinkt.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.congda.jinxinkt.mvp.model.api.ConstanstKt;
+import com.congda.jinxinkt.BuildConfig;
+import com.congda.jinxinkt.application.Constanst;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
-import com.jess.arms.utils.ArmsUtils;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import com.congda.jinxinkt.BuildConfig;
-import com.congda.jinxinkt.mvp.model.api.Api;
 
 /**
  * ================================================
@@ -46,7 +41,7 @@ public final class GlobalConfiguration implements ConfigModule {
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 
-        builder.baseurl(ConstanstKt.APP_DOMAIN)
+        builder.baseurl(Constanst.APP_DOMAIN)
                 //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
                 //请参考 https://github.com/JessYanCoding/MVPArms/wiki#3.4
                 .imageLoaderStrategy(new GlideImageLoaderStrategy())

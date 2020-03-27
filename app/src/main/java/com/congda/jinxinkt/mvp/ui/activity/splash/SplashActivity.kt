@@ -3,8 +3,10 @@ package com.congda.jinxinkt.mvp.ui.activity.splash
 import android.content.Intent
 import android.os.Bundle
 import com.congda.baselibrary.imutils.IMCutTimeDownView
+import com.congda.baselibrary.imutils.IMPreferenceUtil
 import com.congda.baselibrary.imutils.IMStatusBarUtil
 import com.congda.jinxinkt.R
+import com.congda.jinxinkt.application.Constanst
 import com.congda.jinxinkt.di.component.splash.DaggerSplashComponent
 import com.congda.jinxinkt.di.module.splash.SplashModule
 import com.congda.jinxinkt.mvp.contract.splash.SplashContract
@@ -40,12 +42,28 @@ class SplashActivity : IMBaseActivity<SplashPresenter>(), SplashContract.View,
 
 
     override fun initData(savedInstanceState: Bundle?) {
+        if(isFirstOpen()){
+            return
+        }
         skipTv.setOnFinishListener(this)
         mPresenter?. CheckedVersion(this)
     }
 
+    /**
+     * 判断是不是第一次进去app
+     */
+    private fun isFirstOpen(): Boolean {
+        if (IMPreferenceUtil.getPreference_Boolean(Constanst.FIRST_OPEN, true)) {
+            IMPreferenceUtil.setPreference_Boolean(Constanst.FIRST_OPEN, false)
+            startActivity(Intent(this@SplashActivity,GuideActivity::class.java))
+            finish()
+            return  true
+        }
+        return false
+    }
+
     override fun setOnFinishListener() {
-        val intent = Intent(this, GuideActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -54,5 +72,8 @@ class SplashActivity : IMBaseActivity<SplashPresenter>(), SplashContract.View,
         skipTv.setTotalTime(3000)
         IMImageLoadUtil.CommonSplashImageLoadCp(this, s[0].adsImgUrl, iv_bg)
     }
+
+
+
 }
 
