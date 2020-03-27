@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_guide.*
 class GuideActivity : IMBaseActivity<IPresenter>(), ViewPager.OnPageChangeListener, View.OnClickListener {
     private var views: ArrayList<View> = arrayListOf()
     // 引导页图片资源
-    private val pics = intArrayOf(R.layout.guid_view1, R.layout.guid_view2, R.layout.guid_view3)
+    private val pics = intArrayOf(R.layout.layout_guide_one, R.layout.layout_guide_two, R.layout.layout_guide_three)
     // 底部小点图片
     lateinit var dots: Array<ImageView?>
     private var currentIndex = 0

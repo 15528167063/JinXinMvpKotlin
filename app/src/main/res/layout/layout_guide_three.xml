@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@mipmap/guide3"/>
+        android:src="@mipmap/icon_guide_three"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
