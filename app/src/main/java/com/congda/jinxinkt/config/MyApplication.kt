@@ -1,4 +1,4 @@
-package com.congda.jinxinkt.application
+package com.congda.jinxinkt.config
 
 import android.content.Context
 import com.congda.baselibrary.BaseModuManager

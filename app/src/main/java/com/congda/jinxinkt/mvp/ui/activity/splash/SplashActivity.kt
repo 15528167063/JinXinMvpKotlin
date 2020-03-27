@@ -6,7 +6,7 @@ import com.congda.baselibrary.imutils.IMCutTimeDownView
 import com.congda.baselibrary.imutils.IMPreferenceUtil
 import com.congda.baselibrary.imutils.IMStatusBarUtil
 import com.congda.jinxinkt.R
-import com.congda.jinxinkt.application.Constanst
+import com.congda.jinxinkt.config.Constanst
 import com.congda.jinxinkt.di.component.splash.DaggerSplashComponent
 import com.congda.jinxinkt.di.module.splash.SplashModule
 import com.congda.jinxinkt.mvp.contract.splash.SplashContract

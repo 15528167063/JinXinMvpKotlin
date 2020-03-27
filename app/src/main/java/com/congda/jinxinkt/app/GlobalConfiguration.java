@@ -6,7 +6,7 @@ import android.content.Context;
 import androidx.fragment.app.FragmentManager;
 
 import com.congda.jinxinkt.BuildConfig;
-import com.congda.jinxinkt.application.Constanst;
+import com.congda.jinxinkt.config.Constanst;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
