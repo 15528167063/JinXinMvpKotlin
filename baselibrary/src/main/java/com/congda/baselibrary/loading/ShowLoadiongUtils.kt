@@ -8,10 +8,10 @@ import android.text.TextUtils
 import com.congda.baselibrary.R
 
 object ShowLoadiongUtils {
-    lateinit var pd: ProgressDialog
-    lateinit var loadingDialog: DialogMessageTypeOne
-    lateinit var dialogMessage: DialogMessageTypeTwo
-    lateinit var progressDialog: DialogMessageTypeTwo
+    var pd: ProgressDialog?=null
+    var loadingDialog: DialogMessageTypeOne?=null
+    var dialogMessage: DialogMessageTypeTwo?=null
+    var progressDialog: DialogMessageTypeTwo?=null
     /**
      * 通用Dialog弹窗
      */
@@ -28,56 +28,61 @@ object ShowLoadiongUtils {
      * 显示加载界面loading(自带)
      */
     fun showLoadingTypeZero(context: Context) {
-        if (this::pd.isInitialized && pd.isShowing) {
-            pd.dismiss()
+        if (pd!=null && pd!!.isShowing) {
+            pd!!.dismiss()
+            pd=null
         }
-        if (!this::loadingDialog.isInitialized) {
-            pd = ProgressDialog(context)
-            pd.setMessage(context.resources.getString(R.string.im_loading))
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-            pd.setCancelable(true)
-        }
-        pd.show()
+        pd = ProgressDialog(context)
+        pd!!.setMessage(context.resources.getString(R.string.im_loading))
+        pd!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+        pd!!.setCancelable(true)
+        pd!!.show()
     }
-
     fun dissloadingTypeZero() {
-        if (this::pd.isInitialized && pd.isShowing) {
-            pd.dismiss()
+        if (pd!=null &&  pd!!.isShowing) {
+            pd!!.dismiss()
+            pd=null
         }
     }
     /**
      * 显示加载界面loading(第1种自定义)
      */
     fun showLoadingDialogTypeOne(context: Context) {
-        if (!this::loadingDialog.isInitialized) {
-            loadingDialog = DialogMessageTypeOne(context)
-            loadingDialog.set_progress(context.resources.getString(R.string.im_loading))
+        if (loadingDialog!=null && loadingDialog!!.isshow()) {
+            loadingDialog!!.dismiss()
+            loadingDialog=null
         }
-        loadingDialog.show()
+        loadingDialog = DialogMessageTypeOne(context)
+        loadingDialog!!.set_progress(context.resources.getString(R.string.im_loading))
+        loadingDialog!!.show()
     }
 
     fun dismissLoadingDialogTypeOne() {
-        if (this::loadingDialog.isInitialized) {
-            loadingDialog.dismiss()
+        if (loadingDialog!=null &&  loadingDialog!!.isshow()) {
+            loadingDialog!!.dismiss()
+            loadingDialog=null
         }
     }
     /**
      * 显示加载界面loading(第2种自定义)
      */
     fun showLoadingDialogTypeTwo(context: Context, msg: String) {
-        if (!this::dialogMessage.isInitialized) {
-            dialogMessage = DialogMessageTypeTwo(context)
-            dialogMessage.setType(1)
+        if (dialogMessage!=null ) {
+            dialogMessage!!.dismiss()
+            dialogMessage=null
         }
+        dialogMessage = DialogMessageTypeTwo(context)
+        dialogMessage!!.setType(1)
         if (!TextUtils.isEmpty(msg)) {
-            dialogMessage.setMessage(msg)
+            dialogMessage!!.setMessage(msg)
         }
-        dialogMessage.showDialog()
+        dialogMessage!!.showDialog()
     }
 
     fun dismissLoadingDialogTypeTwo() {
-        if (this::dialogMessage.isInitialized) {
-            dialogMessage.dissmissDialog()
+        if (dialogMessage!=null) {
+            dialogMessage!!.dissmissDialog()
+            dialogMessage=null
         }
     }
 
@@ -85,20 +90,21 @@ object ShowLoadiongUtils {
      * 显示加载界面loading(带进度条)
      */
     fun showLoadingDialogProgress(context: Context, progeress: Int) {
-        if (!this::progressDialog.isInitialized) {
+        if(progressDialog==null){
             progressDialog = DialogMessageTypeTwo(context)
-            progressDialog.setType(1)
-            progressDialog.showDialog()
+            progressDialog!!.setType(1)
+            progressDialog!!.showDialog()
         }
-        if (!progressDialog.isShowing) {
-            progressDialog.showDialog()
+        if (!progressDialog!!.isShowing) {
+            progressDialog!!.showDialog()
         }
-        progressDialog.setProgress(progeress)
+        progressDialog!!.setProgress(progeress)
     }
 
     fun dismissProgress() {
-        if (this::progressDialog.isInitialized) {
-            progressDialog.dissmissDialog()
+        if (progressDialog!=null) {
+            progressDialog!!.dissmissDialog()
+            progressDialog=null
         }
     }
 }

@@ -12,7 +12,6 @@ import com.jess.arms.di.scope.ActivityScope
 import com.jess.arms.http.imageloader.ImageLoader
 import com.jess.arms.integration.AppManager
 import com.jess.arms.mvp.BasePresenter
-import com.jess.arms.utils.RxLifecycleUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.jessyan.rxerrorhandler.core.RxErrorHandler
@@ -20,18 +19,6 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber
 import javax.inject.Inject
 
 
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 03/26/2020 16:09
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
 @ActivityScope
 class SplashPresenter
 @Inject
@@ -46,8 +33,8 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
     lateinit var mAppManager: AppManager
 
 
-    private var versionCode // 版本号
-            = 0
+    private var versionCode :Int=0 // 版本号
+
     private var versionName : String? = null// 版本名
 
     override fun onDestroy() {
@@ -61,7 +48,6 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
             .subscribeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
             .subscribe( object : ErrorHandleSubscriber<IMHttpResult<VersonBeanData>>(mErrorHandler) {
                 override fun onNext(t: IMHttpResult<VersonBeanData>) {
                     getSplashData()
@@ -79,7 +65,7 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
             });
     }
 
-    private fun getMyVersion(context: Context) {
+    fun getMyVersion(context: Context) {
         val pm = context.packageManager
         try {
             val packageInfo = pm.getPackageInfo(context.packageName, 0)

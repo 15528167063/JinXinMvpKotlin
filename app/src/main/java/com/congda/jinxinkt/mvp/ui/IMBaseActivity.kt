@@ -9,7 +9,11 @@ import android.view.View
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.congda.baselibrary.base.BaseActivity
+import com.congda.baselibrary.loading.ShowLoadiongUtils
+import com.congda.baselibrary.loading.ShowLoadiongUtils.dismissLoadingDialogTypeOne
 import com.congda.baselibrary.loading.ShowLoadiongUtils.dismissLoadingDialogTypeTwo
+import com.congda.baselibrary.loading.ShowLoadiongUtils.dissloadingTypeZero
+import com.congda.baselibrary.loading.ShowLoadiongUtils.showLoadingDialogTypeOne
 import com.congda.baselibrary.loading.ShowLoadiongUtils.showLoadingDialogTypeTwo
 import com.congda.jinxinkt.R
 import com.jess.arms.base.delegate.IActivity

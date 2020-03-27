@@ -1,6 +1,6 @@
 package com.congda.jinxinkt.mvp.model.entity
 
-class SplashAdBean (
+data  class SplashAdBean (
     var adsId: String,
     var adsImgUrl: String,//广告图片地址
     var adsName: String,

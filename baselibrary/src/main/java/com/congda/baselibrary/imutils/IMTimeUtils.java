@@ -11,9 +11,6 @@ import java.util.Date;
  * 日期工具
  */
 public class IMTimeUtils {
-    /**
-     * 时间戳转时间
-     */
     public static String stampToTime(String stamp,String type) {
         if(type==null){
             type="yyyy-MM-dd HH:mm:ss";
