@@ -40,10 +40,7 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
     override fun onDestroy() {
         super.onDestroy();
     }
-
     fun CheckedVersion(context: Context) {
-        // 获取自己的版本信息
-        getMyVersion(context)
         mModel.CheckedVersion("1")
             .subscribeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())
@@ -64,18 +61,4 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
                 }
             });
     }
-
-    fun getMyVersion(context: Context) {
-        val pm = context.packageManager
-        try {
-            val packageInfo = pm.getPackageInfo(context.packageName, 0)
-            // 版本号
-            versionCode = packageInfo.versionCode
-            // 版本名
-            versionName = packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            return
-        }
-    }
-
 }
