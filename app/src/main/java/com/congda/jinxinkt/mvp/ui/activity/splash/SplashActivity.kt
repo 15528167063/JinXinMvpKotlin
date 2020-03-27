@@ -45,7 +45,7 @@ class SplashActivity : IMBaseActivity<SplashPresenter>(), SplashContract.View,
     }
 
     override fun setOnFinishListener() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, GuideActivity::class.java)
         startActivity(intent)
         finish()
     }

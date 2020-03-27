@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.InflateException
 import android.view.View
+import android.widget.Toast
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.congda.baselibrary.base.BaseActivity
-import com.congda.baselibrary.loading.ShowLoadiongUtils
-import com.congda.baselibrary.loading.ShowLoadiongUtils.dismissLoadingDialogTypeOne
 import com.congda.baselibrary.loading.ShowLoadiongUtils.dismissLoadingDialogTypeTwo
-import com.congda.baselibrary.loading.ShowLoadiongUtils.dissloadingTypeZero
-import com.congda.baselibrary.loading.ShowLoadiongUtils.showLoadingDialogTypeOne
 import com.congda.baselibrary.loading.ShowLoadiongUtils.showLoadingDialogTypeTwo
 import com.congda.jinxinkt.R
 import com.jess.arms.base.delegate.IActivity
@@ -29,6 +26,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+
 abstract class IMBaseActivity<P : IPresenter?> : BaseActivity(), IActivity, ActivityLifecycleable, IView {
     protected val TAG = this.javaClass.simpleName
     private val mLifecycleSubject = BehaviorSubject.create<ActivityEvent>()
@@ -37,7 +35,7 @@ abstract class IMBaseActivity<P : IPresenter?> : BaseActivity(), IActivity, Acti
     @JvmField
     @Inject
     var mPresenter: P? = null //如果当前页面逻辑简单, Presenter 可以为 nul
-
+    private var exitTime: Long = 0
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
         if (mCache == null) {
@@ -121,5 +119,14 @@ abstract class IMBaseActivity<P : IPresenter?> : BaseActivity(), IActivity, Acti
 
     override fun killMyself() {
         finish()
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+            exitTime = System.currentTimeMillis()
+        } else {
+            finish()
+        }
     }
 }
