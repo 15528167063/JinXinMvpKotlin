@@ -53,7 +53,9 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) : BasePr
 
     fun getSplashData() {
         mModel.getGetAdJson()
-            .compose(RxUtils.applySchedulers(mRootView))
+            .subscribeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe( object : ErrorHandleSubscriber<IMHttpResult<List<SplashAdBean>>>(mErrorHandler) {
                 override fun onNext(t: IMHttpResult<List<SplashAdBean>>) {
                     mRootView.handleView(t.data)
