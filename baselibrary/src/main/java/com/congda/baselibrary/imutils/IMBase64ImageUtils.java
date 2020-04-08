@@ -1,5 +1,6 @@
 package com.congda.baselibrary.imutils;
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -11,6 +12,7 @@ public class IMBase64ImageUtils {
     /**
      * 将图片转换成Base64编码的字符串
      */
+    @SuppressLint("NewApi")
     public  static   String imageToBase64(String path){
         if(TextUtils.isEmpty(path)){
             return null;

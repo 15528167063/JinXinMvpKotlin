@@ -1,11 +1,14 @@
 package com.congda.jinxinkt.mvp.ui.fragment
 
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.congda.baselibrary.widget.IMSheetDialog
+import com.congda.baselibrary.widget.IMSheetViewDialog
 import com.congda.jinxinkt.R
 import com.congda.jinxinkt.di.component.fragment.DaggerHomeComponent
 import com.congda.jinxinkt.di.module.fragment.HomeModule
@@ -16,7 +19,7 @@ import com.congda.jinxinkt.utils.glide.IMImageLoadUtil
 import com.jess.arms.di.component.AppComponent
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.OnClickListener {
+class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.OnClickListener ,IMSheetViewDialog.Callback{
     companion object {
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()
@@ -50,20 +53,26 @@ class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.On
 
     }
 
+
+
+
+
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.iv1->{
-//                activity?.let { mPresenter?.ScanPickure(it) };
-            }
             R.id.btn1->{
-                activity?.let { showSheetView() }
+                IMSheetViewDialog().show(activity?.supportFragmentManager,this)
             }
             R.id.btn2->{
+                activity?.let { showSheetView() }
+            }
+            R.id.btn3->{
                 showLoading()
                 btn2.postDelayed({hideLoading()},2000)
             }
         }
     }
+
+
 
     private fun showSheetView() {
         IMSheetDialog.Builder(activity)
@@ -72,5 +81,19 @@ class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.On
             })
             .addSheet("选择图片", DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
             .create().show()
+    }
+
+    override fun onClick(position: Int) {
+        when(position){
+            0->{
+                showMessage("0")
+            }
+            1->{
+                showMessage("1")
+            }
+            2->{
+                showMessage("2")
+            }
+        }
     }
 }
