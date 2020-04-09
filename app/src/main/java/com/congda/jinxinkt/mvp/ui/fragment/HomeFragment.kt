@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.congda.baselibrary.imutils.IMBase64ImageUtils
 import com.congda.baselibrary.imutils.IMChooseUtils
 import com.congda.baselibrary.widget.IMSheetDialog
 import com.congda.baselibrary.widget.IMSheetViewDialog
@@ -17,9 +16,11 @@ import com.congda.jinxinkt.di.module.fragment.HomeModule
 import com.congda.jinxinkt.mvp.contract.fragment.HomeContract
 import com.congda.jinxinkt.mvp.presenter.fragment.HomePresenter
 import com.congda.jinxinkt.mvp.ui.IMBaseFragment
+import com.donkingliang.imageselector.utils.ImageSelector
 import com.jess.arms.di.component.AppComponent
 import com.zhihu.matisse.Matisse
 import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.OnClickListener ,IMSheetViewDialog.Callback{
     companion object {
@@ -84,9 +85,16 @@ class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.On
         IMSheetDialog.Builder(activity)
             .addSheet("拍照", DialogInterface.OnClickListener { dialog, which ->
                 dialog.dismiss()
-                IMChooseUtils.choosePhotoForResult(activity,10001,1)
+                ImageSelector.builder()
+                    .setCrop(true) // 设置是否使用图片剪切功能。
+                    .setCropRatio(1.0f) // 图片剪切的宽高比,默认1.0f。宽固定为手机屏幕的宽。
+                    .onlyTakePhoto(true)  // 仅拍照，不打开相册
+                    .start(activity, 10002);
             })
-            .addSheet("选择图片", DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+            .addSheet("选择图片", DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+                IMChooseUtils.choosePhotoForResult(activity,10001,9)
+            })
             .create().show()
     }
 
@@ -113,10 +121,15 @@ class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.On
     }
 
     //选择图片
-    public fun setPickUre(data: Intent?) {
-        val paths = Matisse.obtainPathResult(data)
-        IMBase64ImageUtils.imageToBase64(paths[0])
-        activity?.let { IMImageLoadUtil.CommonImageLineCircleLoad(it,paths[0],iv1) }
+    public fun setPickUre(data: Intent?,type : Int=0) {
+        if(type==10001){
+            val paths = Matisse.obtainPathResult(data)
+            activity?.let { IMImageLoadUtil.CommonImageLineCircleLoad(it,paths[0],iv1) }
+        }else{
+            val isCameraImage = data?.getBooleanExtra(ImageSelector.IS_CAMERA_IMAGE, false)
+            val images = data?.getStringArrayListExtra(ImageSelector.SELECT_RESULT)
+            activity?.let { IMImageLoadUtil.CommonImageLineCircleLoad(it, images?.get(0),iv1) }
+        }
     }
 
 

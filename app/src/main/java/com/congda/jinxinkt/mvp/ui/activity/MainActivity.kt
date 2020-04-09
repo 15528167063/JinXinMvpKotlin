@@ -91,7 +91,10 @@ class MainActivity : IMBaseActivity<MainPresenter>(), MainContract.View, ViewPag
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==10001 && resultCode== Activity.RESULT_OK){
             val homeFragment = mFragments[0] as HomeFragment
-            homeFragment.setPickUre(data);
+            homeFragment.setPickUre(data,10001);
+        }else  if(requestCode==10002 && resultCode== Activity.RESULT_OK){
+            val homeFragment = mFragments[0] as HomeFragment
+            homeFragment.setPickUre(data,10002);
         }
     }
 }

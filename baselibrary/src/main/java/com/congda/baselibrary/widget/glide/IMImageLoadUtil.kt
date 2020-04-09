@@ -53,21 +53,6 @@ object IMImageLoadUtil {
     }
 
     /**
-     * 加载圆形图片
-     */
-    fun CommonImageCircleLoad(context: Context?, url: String?, imageView: ImageView?) {
-        val requestOptions = RequestOptions.circleCropTransform()
-        Glide.with(context!!)
-            .load(url)
-            .placeholder(R.mipmap.im_icon_stub_loading_circle)
-            .error(R.mipmap.im_icon_stub_circle)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .dontAnimate()
-            .apply(requestOptions)
-            .into(imageView!!)
-    }
-
-    /**
      * 加载圆形图片(带边框)
      */
     fun CommonImageLineCircleLoad(context: Context, url: String?, imageView: ImageView?) {
@@ -81,6 +66,21 @@ object IMImageLoadUtil {
             .apply(options)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .dontAnimate()
+            .into(imageView!!)
+    }
+
+    /**
+     * 加载圆形图片
+     */
+    fun CommonImageCircleLoad(context: Context?, url: String?, imageView: ImageView?) {
+        val requestOptions = RequestOptions.circleCropTransform()
+        Glide.with(context!!)
+            .load(url)
+            .placeholder(R.mipmap.im_icon_stub_loading_circle)
+            .error(R.mipmap.im_icon_stub_circle)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .dontAnimate()
+            .apply(requestOptions)
             .into(imageView!!)
     }
 
