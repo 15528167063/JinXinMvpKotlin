@@ -1,4 +1,4 @@
-package com.congda.jinxinkt.utils.glide;
+package com.congda.baselibrary.widget.glide;
 
 import android.content.Context;
 import android.content.res.Resources;

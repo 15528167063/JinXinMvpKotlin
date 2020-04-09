@@ -14,7 +14,7 @@ import com.congda.jinxinkt.mvp.model.entity.SplashAdBean
 import com.congda.jinxinkt.mvp.presenter.splash.SplashPresenter
 import com.congda.jinxinkt.mvp.ui.IMBaseActivity
 import com.congda.jinxinkt.mvp.ui.activity.MainActivity
-import com.congda.jinxinkt.utils.glide.IMImageLoadUtil
+import com.congda.baselibrary.widget.glide.IMImageLoadUtil
 import com.jess.arms.di.component.AppComponent
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -46,7 +46,8 @@ class SplashActivity : IMBaseActivity<SplashPresenter>(), SplashContract.View,
             return
         }
         skipTv.setOnFinishListener(this)
-        mPresenter?. CheckedVersion(this)
+        skipTv.setTotalTime(3000)
+//        mPresenter?. CheckedVersion(this)
     }
 
     /**

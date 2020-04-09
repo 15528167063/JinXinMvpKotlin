@@ -20,6 +20,11 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     buildTypes {
@@ -50,7 +55,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'me.jessyan:arms:2.5.2'
-    implementation 'me.jessyan:arms-imageloader-glide:2.5.2'
+//    implementation 'me.jessyan:arms-imageloader-glide:2.5.2'
 
     //view
     implementation rootProject.ext.dependencies["autosize"]

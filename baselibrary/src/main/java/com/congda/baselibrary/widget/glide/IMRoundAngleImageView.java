@@ -1,4 +1,4 @@
-package com.congda.jinxinkt.utils.glide;
+package com.congda.baselibrary.widget.glide;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,8 +14,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.congda.baselibrary.R;
 import com.congda.baselibrary.imutils.IMDensityUtil;
-import com.congda.jinxinkt.R;
 
 @SuppressLint("AppCompatCustomView")
 public class IMRoundAngleImageView extends ImageView {

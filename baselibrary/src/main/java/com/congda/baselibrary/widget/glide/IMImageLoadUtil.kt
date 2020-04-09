@@ -1,4 +1,4 @@
-package com.congda.jinxinkt.utils.glide
+package com.congda.baselibrary.widget.glide
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -15,8 +15,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import com.congda.baselibrary.R
 import com.congda.baselibrary.imutils.IMDensityUtil
-import com.congda.jinxinkt.R
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
@@ -135,8 +135,8 @@ object IMImageLoadUtil {
         val drawableCrossFadeFactory = DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build()
         Glide.with(context!!)
             .load(url)
-            .placeholder(R.mipmap.splash_bg)
-            .error(R.mipmap.splash_bg)
+            .placeholder(R.mipmap.im_splash_bg)
+            .error(R.mipmap.im_splash_bg)
             .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.congda.jinxinkt.utils.glide
+package com.congda.baselibrary.widget.glide
 
 import android.content.Context
 import android.graphics.drawable.Drawable

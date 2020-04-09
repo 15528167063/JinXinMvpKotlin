@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.congda.jinxinkt.utils.glide;
+package com.congda.baselibrary.widget.glide;
 
 import android.content.Context;
 import android.graphics.Point;
 
-import com.congda.jinxinkt.R;
+import com.congda.baselibrary.R;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.IncapableCause;
