@@ -1,7 +1,16 @@
 package com.congda.jinxinkt.mvp.presenter.fragment
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.DialogInterface
+import android.view.View
+import androidx.fragment.app.FragmentActivity
+import cc.shinichi.library.ImagePreview
+import cc.shinichi.library.bean.ImageInfo
+import cc.shinichi.library.view.listener.OnBigImagePageChangeListener
+import com.congda.baselibrary.widget.IMSavePictureUtils
+import com.congda.baselibrary.widget.IMSheetDialog
 import com.congda.jinxinkt.mvp.contract.fragment.HomeContract
 import com.jess.arms.di.scope.FragmentScope
 import com.jess.arms.http.imageloader.ImageLoader
@@ -27,7 +36,8 @@ import javax.inject.Inject
 class HomePresenter
 @Inject
 constructor(model: HomeContract.Model, rootView: HomeContract.View) :
-    BasePresenter<HomeContract.Model, HomeContract.View>(model, rootView) {
+    BasePresenter<HomeContract.Model, HomeContract.View>(model, rootView),
+    OnBigImagePageChangeListener {
     @Inject
     lateinit var mErrorHandler: RxErrorHandler
     @Inject
@@ -42,67 +52,65 @@ constructor(model: HomeContract.Model, rootView: HomeContract.View) :
         super.onDestroy();
     }
 
-//    fun ScanPickure(context: Context) {
-//        var datas= arrayListOf<ImageInfo>()
-//        val images = arrayOf(
-//            "http://img6.16fan.com/201510/11/013553aj3kp9u6iuz6k9uj.jpg",
-//            "http://img6.16fan.com/201510/11/011753fnanichdca0wbhxc.jpg",
-//            "http://img6.16fan.com/201510/11/011819zbzbciir9ctn295o.jpg",
-//            "http://img6.16fan.com/201510/11/004847l7w568jc5n5wn385.jpg",
-//            "http://img6.16fan.com/201510/11/004906z0a0a0e0hs56ce0t.jpg",
-//            "http://img6.16fan.com/201510/11/004937pwttwjt0bgtoton7.jpg",
-//            "http://img6.16fan.com/201510/11/004946t38ybzt8bq8c838y.jpg",
-//            "http://img6.16fan.com/201510/11/004955d8ftz3t1sttt7ft7.jpg",
-//            "http://img6.16fan.com/201510/11/005027qy2g55yyglb59zdu.jpg",
-//            "http://img6.16fan.com/201510/11/005229bbtxkczcl0btmw8e.jpg",  // 下面这张是：5760 * 3840
-//            "http://img6.16fan.com/attachments/wenzhang/201805/18/152660818127263ge.jpeg",  // 下面这张是：2280 * 22116
-//            "http://img6.16fan.com/attachments/wenzhang/201805/18/152660818716180ge.jpeg"
-//        )
-//        for (i in images.indices) {
-//            val bean = ImageInfo()
-//            bean.originUrl = images[i]
-//            bean.thumbnailUrl = images[i]
-//            datas.add(bean)
-//        }
-//        ImagePreview.getInstance() // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好；
-//            .setContext(context)
-//            .setIndex(2) // 保存的文件夹名称，会在Picture目录进行文件夹的新建。比如："BigImageView"，会在Picture目录新建BigImageView文件夹)
-//            .setFolderName("BigImageView") //						.setImageList(datas)
-//            .setImageInfoList(datas) // 缩放动画时长，单位ms
-//            .setZoomTransitionDuration(3000)
-//            .setLoadStrategy(ImagePreview.LoadStrategy.Default) // 是否启用点击图片关闭。默认启用
-//            .setEnableClickClose(true) // 是否显示关闭页面按钮，在页面左下角。默认不显示
-//            .setShowCloseButton(false) // 设置关闭按钮图片资源，可不填，默认为库中自带：R.drawable.ic_action_close
-//            .setCloseIconResId(R.drawable.ic_action_close) // 设置是否显示顶部的指示器（1/9）默认显示
-//            .setShowIndicator(true) // 设置顶部指示器背景shape，默认自带灰色圆角shape
-//            .setIndicatorShapeResId(R.drawable.shape_indicator_bg) // 设置失败时的占位图，默认为库中自带R.drawable.load_failed，设置为 0 时不显示
-//            .setErrorPlaceHolder(R.drawable.load_failed) //设置是否显示下载按钮
-//            .setShowDownButton(false) // 点击回调
-//            .setBigImageClickListener { activity, view, position -> } // 长按回调
-//            .setBigImageLongClickListener { activity, view, position ->
-//                true
-//            } // 页面切换回调
-//            .setBigImagePageChangeListener(object : OnBigImagePageChangeListener {
-//                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-//                override fun onPageSelected(position: Int) {}
-//                override fun onPageScrollStateChanged(state: Int) {}
-//            })
-//            .setProgressLayoutId(
-//                ImagePreview.PROGRESS_THEME_CIRCLE_TEXT,
-//                object : OnOriginProgressListener {
-//                    override fun progress(parentView: View, progress: Int) {
-//                        Log.d(TAG, "progress: $progress")
-//                        // 需要找到进度控件并设置百分比，回调中的parentView即传入的布局的根View，可通过parentView找到控件：
-//                        val progressBar = parentView.findViewById<ProgressBar>(R.id.sh_progress_view)
-//                        val textView = parentView.findViewById<TextView>(R.id.sh_progress_text)
-//                        progressBar.progress = progress
-//                        val progressText = "$progress%"
-//                        textView.text = progressText
-//                    }
-//                    override fun finish(parentView: View) {
-//                        Log.d(TAG, "finish: ")
-//                    }
-//                })
-//            .start()
-//    }
+    fun showBigImageView(activity: FragmentActivity?) {
+        val imageInfoList: MutableList<ImageInfo> = mutableListOf();
+        var imageInfo = ImageInfo()
+        imageInfo.setOriginUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2AWUmzAAECP63pVyA18.jpeg")
+        imageInfo.setThumbnailUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2ATSIHAAAVM3MJdYM67.jpeg")
+        imageInfoList.add(0, imageInfo)
+
+        imageInfo = ImageInfo()
+        imageInfo.setOriginUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2ALyMTAAD328O0VTE12.jpeg")
+        imageInfo.setThumbnailUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2AFbFgAAAPzOcoRi469.jpeg")
+        imageInfoList.add(0, imageInfo)
+
+        imageInfo = ImageInfo()
+        imageInfo.setOriginUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2ARDhPAADDpOED4bk42.jpeg")
+        imageInfo.setThumbnailUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2ARDACAAARD8fqdEI88.jpeg")
+        imageInfoList.add(0, imageInfo)
+
+        imageInfo = ImageInfo()
+        imageInfo.setOriginUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2AJ1yQAADNV_mcurE76.jpeg")
+        imageInfo.setThumbnailUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2ASeHlAAAPFoY5eMs66.jpeg")
+        imageInfoList.add(0, imageInfo)
+
+        imageInfo = ImageInfo()
+        imageInfo.setOriginUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2AZgfmAAFnc0C7xH872.jpeg")
+        imageInfo.setThumbnailUrl("http://47.244.137.17:9050/group1/M00/00/11/rB8eHF6Byd2AHwWyAAAUdyLUDpg70.jpeg")
+        imageInfoList.add(0, imageInfo)
+
+        ImagePreview.getInstance() // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好；
+            .setContext(activity!!)
+            .setLoadStrategy(ImagePreview.LoadStrategy.Default)
+            .setZoomTransitionDuration(1000)
+            .setImageInfoList(imageInfoList) //设置是否显示下载按钮
+            //设置是否显示下载按钮
+            .setShowDownButton(false)
+            // 点击回调
+            .setBigImageClickListener{ activity: Activity, view: View, i: Int ->{}
+            }
+            .setBigImageLongClickListener{ activity: Activity, view: View, i: Int ->
+                IMSheetDialog.Builder(activity)
+                    .addSheet("保存图片") { dialog : DialogInterface, which :Int ->
+                        dialog.dismiss()
+                        ImagePreview.getInstance().setFolderName("JinXin")
+                        IMSavePictureUtils.downloadPicture(activity, imageInfoList.get(i).getOriginUrl())
+                    }
+                    .addSheet("分享好友") { dialog : DialogInterface, which :Int ->
+                        dialog.dismiss()
+                    }.create().show();
+                return@setBigImageLongClickListener true}
+            .setBigImagePageChangeListener(this)
+            .start()
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
+    }
+
 }

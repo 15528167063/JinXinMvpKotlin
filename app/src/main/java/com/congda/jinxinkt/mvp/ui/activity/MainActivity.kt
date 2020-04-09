@@ -1,5 +1,7 @@
 package com.congda.jinxinkt.mvp.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckedTextView
@@ -82,6 +84,14 @@ class MainActivity : IMBaseActivity<MainPresenter>(), MainContract.View, ViewPag
                 viewpager.setCurrentItem(i, false)
                 break
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==10001 && resultCode== Activity.RESULT_OK){
+            val homeFragment = mFragments[0] as HomeFragment
+            homeFragment.setPickUre(data);
         }
     }
 }

@@ -30,12 +30,8 @@ class IMAppGlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         super.registerComponents(context, glide, registry)
         // 替换底层网络框架为okhttp3，这步很重要！
-        // 替换底层网络框架为okhttp3，这步很重要！
-// 如果您的app中已经存在了自定义的GlideModule，您只需要把这一行代码，添加到对应的重载方法中即可。
-        registry.replace(
-            GlideUrl::class.java,
-            InputStream::class.java,
-            OkHttpUrlLoader.Factory(ProgressManager.getOkHttpClient())
+        // 如果您的app中已经存在了自定义的GlideModule，您只需要把这一行代码，添加到对应的重载方法中即可。
+        registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(ProgressManager.getOkHttpClient())
         )
     }
 }
