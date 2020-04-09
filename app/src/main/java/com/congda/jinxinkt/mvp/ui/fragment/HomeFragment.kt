@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.congda.baselibrary.imutils.IMBase64ImageUtils
 import com.congda.baselibrary.imutils.IMChooseUtils
 import com.congda.baselibrary.widget.IMSheetDialog
 import com.congda.baselibrary.widget.IMSheetViewDialog
@@ -114,6 +115,7 @@ class HomeFragment : IMBaseFragment<HomePresenter>(), HomeContract.View, View.On
     //选择图片
     public fun setPickUre(data: Intent?) {
         val paths = Matisse.obtainPathResult(data)
+        IMBase64ImageUtils.imageToBase64(paths[0])
         activity?.let { IMImageLoadUtil.CommonImageLineCircleLoad(it,paths[0],iv1) }
     }
 
